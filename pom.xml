@@ -95,7 +95,6 @@
 
 
 	<modules>
-		<module>spring-security-5-oauth-resource</module>
 		<module>spring-security-oauth-resource</module>
 		
 		<module>spring-security-oauth-ui-implicit</module>

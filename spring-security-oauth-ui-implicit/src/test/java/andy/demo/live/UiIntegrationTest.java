@@ -1,6 +1,6 @@
 package andy.demo.live;
 
-import andy.demo.config.UiApplication;
+import andy.demo.UiApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
