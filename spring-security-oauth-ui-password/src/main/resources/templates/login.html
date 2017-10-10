@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Spring Security OAuth</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/3.3.2/css/bootstrap.min.css}"/>
+</head>
+<body ng-app="myApp" ng-controller="mainCtrl">
+
+<div th:include="header"></div>
+
+<div class="container">
+
+    <h1 class="col-sm-12">登录</h1>
+    <div class="col-sm-6">
+        <div class="col-sm-12">
+            <label class="col-sm-3">用户名</label>
+            <input class="form-control" type="text" ng-model="loginData.username"/>
+        </div>
+
+        <div class="col-sm-12">
+            <label class="col-sm-3">密  码</label>
+            <input class="form-control" type="password" ng-model="loginData.password"/>
+        </div>
+
+        <div class="col-sm-12">
+            <a class="btn btn-default" href="#" ng-click="login()">登录</a>
+        </div>
+        <div class="col-sm-12">
+            <span>{{loginMessage}}</span>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
