@@ -9,3 +9,13 @@ zuul:
   Servlet30WrapperFilter:
     pre:
       disable:true
+
+# 当前系统所使用的 Auth client 的信息
+client :
+      id : fooClientIdPassword
+      secret : secret
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

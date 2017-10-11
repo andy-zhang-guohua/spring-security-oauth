@@ -4,6 +4,7 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Component;
 
@@ -18,13 +19,19 @@ public class CustomPreZuulFilter extends ZuulFilter {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Value("${client.id}")
+    private String client_id;
+
+    @Value("${client.secret}")
+    private String client_secret;
+
     @Override
     public Object run() {
         final RequestContext ctx = RequestContext.getCurrentContext();
         logger.info("in zuul " + filterType() + " filter " + ctx.getRequest().getRequestURI());
         byte[] encoded;
         try {
-            encoded = Base64.encode("fooClientIdPassword:secret".getBytes("UTF-8"));
+            encoded = Base64.encode((client_id + ":" + client_secret).getBytes("UTF-8"));
             ctx.addZuulRequestHeader("Authorization", "Basic " + new String(encoded));
             logger.info("pre filter");
             logger.info(ctx.getRequest().getHeader("Authorization"));
