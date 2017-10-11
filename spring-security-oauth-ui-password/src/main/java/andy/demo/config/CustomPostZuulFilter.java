@@ -1,20 +1,18 @@
 package andy.demo.config;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
-
-import javax.servlet.http.Cookie;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.context.RequestContext;
+import javax.servlet.http.Cookie;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
 
 @Component
 public class CustomPostZuulFilter extends ZuulFilter {
@@ -25,7 +23,7 @@ public class CustomPostZuulFilter extends ZuulFilter {
     @Override
     public Object run() {
         final RequestContext ctx = RequestContext.getCurrentContext();
-        logger.info("in zuul filter " + ctx.getRequest().getRequestURI());
+        logger.info("in zuul " + filterType() + " filter " + ctx.getRequest().getRequestURI());
 
         final String requestURI = ctx.getRequest().getRequestURI();
         final String requestMethod = ctx.getRequest().getMethod();
@@ -46,7 +44,7 @@ public class CustomPostZuulFilter extends ZuulFilter {
                 cookie.setPath(ctx.getRequest().getContextPath() + "/oauth/token");
                 cookie.setMaxAge(2592000); // 30 days
 
-				ctx.getResponse().addCookie(cookie);
+                ctx.getResponse().addCookie(cookie);
                 logger.info("refresh token = " + refreshToken);
 
             }
@@ -64,16 +62,36 @@ public class CustomPostZuulFilter extends ZuulFilter {
         return null;
     }
 
+    /**
+     * 是否执行该过滤器，此处为true，说明需要过滤
+     *
+     * @return
+     */
     @Override
     public boolean shouldFilter() {
         return true;
     }
 
+    /**
+     * 优先级，数字越大，优先级越低
+     *
+     * @return
+     */
     @Override
     public int filterOrder() {
         return 10;
     }
 
+    /**
+     * 返回一个字符串代表过滤器的类型，在zuul中定义了四种不同生命周期的过滤器类型，具体如下：
+     * pre：可以在请求被路由之前调用
+     * route：在路由请求时候被调用
+     * post：在route和error过滤器之后被调用
+     * error：处理请求时发生错误时被调用
+     * Zuul的主要请求生命周期包括“pre”，“route”和“post”等阶段。对于每个请求，都会运行具有这些类型的所有过滤器。
+     *
+     * @return
+     */
     @Override
     public String filterType() {
         return "post";
