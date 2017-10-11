@@ -21,7 +21,7 @@ public class FooController {
     @RequestMapping(method = RequestMethod.GET, value = "/foos/{id}")
     @ResponseBody
     public Foo findById(@PathVariable final long id) {
-        return new Foo(Long.parseLong(randomNumeric(2)), randomAlphabetic(4));
+        return new Foo(id, randomAlphabetic(4));
     }
 
     // API - write

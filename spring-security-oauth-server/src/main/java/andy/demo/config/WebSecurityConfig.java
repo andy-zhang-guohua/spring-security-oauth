@@ -32,14 +32,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        // @formatter:off
         http.authorizeRequests().antMatchers("/login").permitAll()
                 .antMatchers("/oauth/token/revokeById/**").permitAll()
                 .antMatchers("/tokens/**").permitAll()
                 .anyRequest().authenticated()
+                // 使用基于 form 的登录界面,
+                // A quick note here is that the form login configuration isn’t necessary for the Password flow
+                // – only for the Implicit flow – so you may be able to skip it depending on what OAuth2 flow
+                // you’re using.
                 .and().formLogin().permitAll()
                 .and().csrf().disable();
-        // @formatter:on
     }
 
 }

@@ -2,7 +2,7 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" th:href="@{/}">Spring Security OAuth</a>
+      <a class="navbar-brand" th:href="@{/}">Spring Security OAuth -- 简化模式</a>
     </div>
     
   </div><!-- /.container-fluid -->
@@ -51,6 +51,8 @@ app.config(['$httpProvider', function ($httpProvider) {
 app.controller('mainCtrl', function($scope,$resource,$http,$rootScope) {
 	
 	$scope.$on('oauth:login', function(event, token) {
+        // 每次 oauth 登录成功时，会将获得的 access_token 保存到 $http.defaults.headers.common.Authorization,
+        // 这个信息在随后的 AJAX 请求发生时，会自动添加到请求头部
 		$http.defaults.headers.common.Authorization= 'Bearer ' + token.access_token;
 		console.log('Authorized third party app with token', token.access_token);
 		$scope.token=token.access_token;

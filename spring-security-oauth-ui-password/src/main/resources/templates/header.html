@@ -2,7 +2,7 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" th:href="@{/}">Spring Security OAuth</a>
+                <a class="navbar-brand" th:href="@{/}">Spring Security OAuth -- 用户密码方式</a>
             </div>
             <p class="navbar-text navbar-right">{{organization}} &nbsp; &nbsp; &nbsp;</p>
         </div><!-- /.container-fluid -->
@@ -78,6 +78,7 @@
                 }, validity * 1000);
             }
 
+            // 获取 access_token
             function obtainAccessToken(params) {
                 if (params.username != null) {
                     if (params.remember != null) {
@@ -126,6 +127,7 @@
                         });
             }
 
+            // 退出登录，删除相应的 access_token
             function logout(params) {
                 var req = {
                     method: 'DELETE',
@@ -138,8 +140,8 @@
                             $cookies.remove("validity");
                             $cookies.remove("remember");
                             window.location.href = "login";
-                        }, function () {
-                            console.log("error");
+                        }, function (error) {
+                            console.log(error);
                         }
                 );
             }

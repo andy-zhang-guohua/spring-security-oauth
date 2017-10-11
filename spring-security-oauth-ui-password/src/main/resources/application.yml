@@ -2,6 +2,7 @@ server:
     port: 8084
 zuul:
   routes:
+  # 将　Oauth Server (8081端口) 的所有服务映射到本服务的URL路径　/oauth/**
     oauth:
       path: /oauth/**
       url: http://localhost:8081/spring-security-oauth-server/oauth
