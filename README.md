@@ -29,6 +29,18 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+### 测试数据 
+    1. 用户数据 (定义在 oauth-server WebSecurityConfig 中)
+        用户名/密码     角色
+        john/123        USER
+        tom/111         ADMIN
+        user1/pass      USER
+        admin/nimda     ADMIN
+    2. 客户端数据 (定义在 oauth-server data.sql 中)
+        client_id           client_secret   scope               authorized_grant_types                      access_token_validity   refresh_token_validity
+        barClientIdPassword secret          bar,read,write      password,authorization_code,refresh_token   36000                   36000
+        fooClientIdPassword secret          foo,read,write      password,authorization_code,refresh_token   36000                   36000
+        sampleClientId      secret          read,write,foo,bar  implicit                                    36000                   36000
 
 
 ### 功能点备注
@@ -41,9 +53,13 @@ mvn spring-boot:run
         spring-security-oauth-ui-password 访问受保护页面时总是跳转到登录页面要求用户登录 
         Start with the two simple pages – “index” and “login”; once a user provides their credentials, 
         the front-end JS client uses them to acquire an Access Token from Authorization Server.
+        
+        使用客户端身份 : fooClientIdPassword
     5. 简化模式认证 implicit
         spring-security-oauth-ui-implicit
         Using AngularJS directive OAuth-ng which can connect to OAuth2 server with implicit grant flow
+        
+        使用客户端身份 : sampleClientId
 #### 其它功能点
     1. Spring boot 1.5.6 + AngularJS + bootstrap
     2. Java 1.8
