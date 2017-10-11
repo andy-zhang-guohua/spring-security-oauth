@@ -11,7 +11,11 @@ import java.io.IOException;
 
 /**
  * Cross-Origin Resource Sharing 跨域资源共享 ,它允许浏览器向跨源服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制
- * Spring MVC通过CROS协议解决跨域问题
+ * Spring MVC通过CORS协议解决跨域问题
+ *
+ * 浏览器是如何支持 CORS协议的 : 当JS代码发起 AJAX 请求时，浏览器会自动判断这是否是一个跨域请求，如果是，先发送一个OPTIONS请求询问
+ * 是否可以跨域访问该资源,这个过程称之为"预检",然后浏览器才发送真正JS程序设定的请求；如果不是，浏览器会直接发送JS程序设定的请求。
+ *
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
