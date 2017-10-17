@@ -29,3 +29,4 @@ mvn clean install
 ```
 mvn spring-boot:run
 ```
+基于 Anjular 的 SPA, 使用 AJAX 进行登录和退出，不是使用直接跳转到 login page 的方式。
